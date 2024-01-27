@@ -1,0 +1,10 @@
+# The MergeItems plugin configuration
+
+combineItems:
+  - sourceItemID: 21
+    targetItemID: 3
+  - sourceItemID: 26
+    targetItemID: 8
+  - sourceItemID: 9
+    targetItemID: 9
+
