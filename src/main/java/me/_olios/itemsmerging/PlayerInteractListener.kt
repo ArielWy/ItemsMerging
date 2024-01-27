@@ -5,6 +5,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.inventory.meta.ItemMeta
 
 class PlayerInteractListener(private val plugin: ItemsMerging): Listener {
 
@@ -13,7 +14,7 @@ class PlayerInteractListener(private val plugin: ItemsMerging): Listener {
         // Set the PlayerInteract event for merging
         val player = event.player
         if (!isReady(player)) return
-        merge(player, MergeConfig(plugin, player).getValue(areEquals(player)))
+        merge(player, MergeConfig(plugin, player).getValue(getCustomModelDataIfItemsEqual(player)))
     }
 
     private fun isReady(player: Player): Boolean {
@@ -24,15 +25,25 @@ class PlayerInteractListener(private val plugin: ItemsMerging): Listener {
         return mainHand.type != Material.AIR && offHand.type != Material.AIR
     }
 
-    private fun areEquals(player: Player): Int? {
-        // Check for equal metadata and return the CustomModelData or null
+    private fun areItemsEqual(player: Player): Boolean {
         val mainHand = player.inventory.itemInMainHand.itemMeta
         val offHand = player.inventory.itemInOffHand.itemMeta
 
         val hasMeta = (mainHand?.hasCustomModelData() == true && offHand?.hasCustomModelData() == true)
         val equals = (mainHand.equals(offHand))
-        return if (hasMeta && equals) {
-            mainHand.customModelData
+        val item = MergeConfig(plugin, player).getItem()
+        val same = player.inventory.itemInMainHand.type == item
+
+        return if (item is Material) {
+            hasMeta && equals && same
+        } else {
+            hasMeta && equals
+        }
+    }
+
+    private fun getCustomModelDataIfItemsEqual(player: Player): Int? {
+        return if (areItemsEqual(player)) {
+            player.inventory.itemInMainHand.itemMeta?.customModelData
         } else null
     }
 

@@ -1,4 +1,8 @@
-# The MergeItems plugin configuration
+# The ItemsMerging plugin configuration
+
+enable_certain_item: false
+
+Item: DIRT
 
 combineItems:
   - sourceItemID: 21
