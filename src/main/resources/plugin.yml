@@ -1,0 +1,4 @@
+name: ItemsMerging
+version: '${project.version}'
+main: me._olios.itemsmerging.ItemsMerging
+api-version: 1.20
