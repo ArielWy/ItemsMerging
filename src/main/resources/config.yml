@@ -1,14 +1,26 @@
 # The ItemsMerging plugin configuration
 
+# This setting determines if the merging work on a certain item or not.
+# If it's true, the merging will only work if you're holding a certain item.
 enable_certain_item: false
 
+# This is the specific item that the plugin checks for when enable_certain_item is true.
 Item: DIRT
 
+  # If you hold items with the same secondhand and secondhand custom model data
+  # listed as sourceItemID and interact with them,
+  # they will merge into the same item with the custom model data
+# of the corresponding targetItemID
 combineItems:
+  # You can add or remove IDs from this list as much as you want
   - sourceItemID: 21
     targetItemID: 3
   - sourceItemID: 26
     targetItemID: 8
   - sourceItemID: 9
     targetItemID: 9
+
+  # for example, you can add these IDs:
+  #- sourceItemID: 34
+  #  targetItemID: 653
 
